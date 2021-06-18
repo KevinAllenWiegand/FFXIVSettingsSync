@@ -6,7 +6,7 @@ namespace FFXIVSettingsSync
 {
     /*
         EXAMPLE:
-        using (var networkShare = NetworkShare.Access("MyComputerName", "DomainName", "UserName", "Password"))
+        using (var networkShare = new NetworkShare("MyComputerName", "DomainName", "UserName", "Password"))
         {
             try
             {
@@ -122,29 +122,22 @@ namespace FFXIVSettingsSync
         #endregion
 
         private string _RemoteUncName;
-        private string _RemoteComputerName;
         private string _UserName;
         private string _Password;
 
-        public static NetworkShare Access(string remoteComputerName)
+        public NetworkShare(string remoteComputerName)
+            : this(remoteComputerName, null, null)
         {
-            return new NetworkShare(remoteComputerName, null, null);
         }
 
-        public static NetworkShare Access(string remoteComputerName, string userName, string password)
+        public NetworkShare(string remoteComputerName, string domainName, string userName, string password)
+            : this(remoteComputerName, BuildUserName(domainName, userName), password)
         {
-            return new NetworkShare(remoteComputerName, userName, password);
         }
 
-        public static NetworkShare Access(string remoteComputerName, string domainOrComuterName, string userName, string password)
+        public NetworkShare(string remoteComputerName, string userName, string password)
         {
-            return new NetworkShare(remoteComputerName, domainOrComuterName + @"\" + userName, password);
-        }
-
-        private NetworkShare(string remoteComputerName, string userName, string password)
-        {
-            _RemoteComputerName = remoteComputerName;
-            _RemoteUncName = @"\\" + _RemoteComputerName;
+            _RemoteUncName = $"\\\\{remoteComputerName}";
             _UserName = userName;
             _Password = password;
         }
@@ -178,8 +171,17 @@ namespace FFXIVSettingsSync
 
         public void Dispose()
         {
+            _UserName = String.Empty;
+            _Password = String.Empty;
             Disconnect();
             GC.SuppressFinalize(this);
+        }
+
+        private static String BuildUserName(string domainName, string userName)
+        {
+            if (String.IsNullOrEmpty(domainName)) return userName;
+
+            return $"{domainName}\\{userName}";
         }
 
         ~NetworkShare()
