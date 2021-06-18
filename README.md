@@ -6,3 +6,5 @@ This requires the use of Dropbox for the "remote" copy.  The application watches
 No more manually copying files!
 
 This is a .NET WPF application.  It needs to be ran manually anytime you reboot your computer.  It sits in the system tray, and has a very minimal UI.
+
+Yes, the code is a bit of a monolith in the main service, but I threw this together in just a few hours.  I might fix it up later, but for now, it does what it needs to do.
