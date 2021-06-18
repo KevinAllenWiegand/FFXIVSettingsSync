@@ -54,7 +54,7 @@
             
             <system:String x:Key="ApplicationName">FFXIV Settings Synchronizer</system:String>
 
-            <Border x:Key="TrayToolTip" Background="White" BorderBrush="Black" BorderThickness="2" CornerRadius="4" Opacity="0.8" Width="160" Padding="5">
+            <Border x:Key="TrayToolTip" Background="White" BorderBrush="Black" BorderThickness="2" CornerRadius="4" Opacity="0.8" Width="100" Padding="5">
                 <StackPanel HorizontalAlignment="Stretch">
                     <Grid>
                         <Grid.ColumnDefinitions>
